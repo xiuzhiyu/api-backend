@@ -1,0 +1,41 @@
+server:
+  port: 8090
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, yupi
+      routes:
+        - id: api_route
+          uri: http://localhost:8123
+          predicates:
+            - Path=/api/**
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+dubbo:
+  application:
+     name: yupi-gateway
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos
+    address: nacos://localhost:8848
+#dubbo:
+#  application:
+#    name: yupi-gateway
+#  protocol:
+#    name: dubbo
+#    port: -1
+#  registry:
+#    id: zk-registry
+#    address: zookeeper://127.0.0.1:21810
+#  config-center:
+#    address: zookeeper://127.0.0.1:21810
+#  metadata-report:
+#    address: zookeeper://127.0.0.1:21810
